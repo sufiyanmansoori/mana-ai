@@ -1,0 +1,12 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Mana AI",
+  "localStarter": "Локальная стартовая версия",
+  "composerHint": "Сообщение для Mana AI",
+  "sendMessage": "Отправить сообщение",
+  "stopGeneration": "Остановить генерацию",
+  "chatEmpty": "Начните разговор с Mana AI.",
+  "localDataNotice": "Сообщения хранятся только в этом сеансе. Сервер не подключён.",
+  "dismiss": "Закрыть",
+  "invalidMessage": "Не удалось отправить сообщение. Проверьте его длину и содержимое."
+}

@@ -1,0 +1,12 @@
+{
+  "@@locale": "ko",
+  "appTitle": "Mana AI",
+  "localStarter": "로컬 시작 버전",
+  "composerHint": "Mana AI에 메시지 보내기",
+  "sendMessage": "메시지 보내기",
+  "stopGeneration": "생성 중지",
+  "chatEmpty": "Mana AI와 대화를 시작하세요.",
+  "localDataNotice": "메시지는 현재 세션에만 보관됩니다. 서버가 연결되지 않았습니다.",
+  "dismiss": "닫기",
+  "invalidMessage": "메시지를 보낼 수 없습니다. 길이와 내용을 확인하세요."
+}

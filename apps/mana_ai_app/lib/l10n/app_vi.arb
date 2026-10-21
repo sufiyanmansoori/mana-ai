@@ -1,0 +1,12 @@
+{
+  "@@locale": "vi",
+  "appTitle": "Mana AI",
+  "localStarter": "Bản khởi đầu cục bộ",
+  "composerHint": "Nhắn tin cho Mana AI",
+  "sendMessage": "Gửi tin nhắn",
+  "stopGeneration": "Dừng tạo phản hồi",
+  "chatEmpty": "Bắt đầu cuộc trò chuyện với Mana AI.",
+  "localDataNotice": "Tin nhắn chỉ tồn tại trong phiên này. Chưa kết nối máy chủ.",
+  "dismiss": "Đóng",
+  "invalidMessage": "Không thể gửi tin nhắn. Hãy kiểm tra độ dài và nội dung."
+}

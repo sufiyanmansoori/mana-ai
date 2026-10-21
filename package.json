@@ -1,0 +1,20 @@
+{
+  "name": "mana-ai",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Node.js workspace for the Mana AI backend API.",
+  "engines": {
+    "node": ">=22.13.0",
+    "npm": ">=10.0.0"
+  },
+  "workspaces": [
+    "apps/mana_ai_api"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=@mana-ai/api",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "verify": "npm run typecheck && npm test && npm run build"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "@@locale": "id",
+  "appTitle": "Mana AI",
+  "localStarter": "Versi awal lokal",
+  "composerHint": "Kirim pesan ke Mana AI",
+  "sendMessage": "Kirim pesan",
+  "stopGeneration": "Hentikan pembuatan",
+  "chatEmpty": "Mulai percakapan dengan Mana AI.",
+  "localDataNotice": "Pesan hanya tersimpan dalam sesi ini. Tidak ada server yang terhubung.",
+  "dismiss": "Tutup",
+  "invalidMessage": "Pesan tidak dapat dikirim. Periksa panjang dan isinya."
+}

@@ -1,0 +1,18 @@
+import 'package:flutter/material.dart';
+
+final class CanvasSearchField extends StatelessWidget {
+  const CanvasSearchField({required this.onChanged, super.key});
+
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) => TextField(
+        onChanged: onChanged,
+        textInputAction: TextInputAction.search,
+        decoration: const InputDecoration(
+          prefixIcon: Icon(Icons.search),
+          hintText: 'Search canvas',
+          border: OutlineInputBorder(),
+        ),
+      );
+}

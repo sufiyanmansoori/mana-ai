@@ -1,0 +1,1 @@
+export '../config/remote_config.dart';

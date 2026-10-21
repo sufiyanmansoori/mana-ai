@@ -1,0 +1,12 @@
+{
+  "@@locale": "sw",
+  "appTitle": "Mana AI",
+  "localStarter": "Toleo la mwanzo la ndani",
+  "composerHint": "Tuma ujumbe kwa Mana AI",
+  "sendMessage": "Tuma ujumbe",
+  "stopGeneration": "Simamisha utengenezaji",
+  "chatEmpty": "Anza mazungumzo na Mana AI.",
+  "localDataNotice": "Ujumbe hubaki kwenye kipindi hiki pekee. Hakuna seva iliyounganishwa.",
+  "dismiss": "Funga",
+  "invalidMessage": "Ujumbe haukutumwa. Angalia urefu na maudhui yake."
+}

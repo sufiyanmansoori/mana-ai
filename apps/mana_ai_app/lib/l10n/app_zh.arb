@@ -1,0 +1,12 @@
+{
+  "@@locale": "zh",
+  "appTitle": "Mana AI",
+  "localStarter": "本地起始版本",
+  "composerHint": "给 Mana AI 发送消息",
+  "sendMessage": "发送消息",
+  "stopGeneration": "停止生成",
+  "chatEmpty": "开始与 Mana AI 对话。",
+  "localDataNotice": "消息仅保留在当前会话中。尚未连接服务器。",
+  "dismiss": "关闭",
+  "invalidMessage": "消息未能发送。请检查其长度和内容。"
+}

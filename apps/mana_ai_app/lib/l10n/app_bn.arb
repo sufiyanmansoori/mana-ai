@@ -1,0 +1,12 @@
+{
+  "@@locale": "bn",
+  "appTitle": "Mana AI",
+  "localStarter": "স্থানীয় প্রাথমিক সংস্করণ",
+  "composerHint": "Mana AI-কে বার্তা পাঠান",
+  "sendMessage": "বার্তা পাঠান",
+  "stopGeneration": "উত্তর তৈরি বন্ধ করুন",
+  "chatEmpty": "Mana AI-এর সঙ্গে একটি কথোপকথন শুরু করুন।",
+  "localDataNotice": "বার্তাগুলো শুধু এই সেশনেই থাকে। কোনো সার্ভার সংযুক্ত নেই।",
+  "dismiss": "বন্ধ করুন",
+  "invalidMessage": "বার্তাটি পাঠানো যায়নি। এর দৈর্ঘ্য ও বিষয়বস্তু পরীক্ষা করুন।"
+}

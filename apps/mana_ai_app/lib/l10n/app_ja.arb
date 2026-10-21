@@ -1,0 +1,12 @@
+{
+  "@@locale": "ja",
+  "appTitle": "Mana AI",
+  "localStarter": "ローカルスターター",
+  "composerHint": "Mana AI にメッセージを送信",
+  "sendMessage": "メッセージを送信",
+  "stopGeneration": "生成を停止",
+  "chatEmpty": "Mana AI との会話を始めましょう。",
+  "localDataNotice": "メッセージはこのセッション内にのみ保存されます。サーバーは未接続です。",
+  "dismiss": "閉じる",
+  "invalidMessage": "メッセージを送信できませんでした。長さと内容を確認してください。"
+}

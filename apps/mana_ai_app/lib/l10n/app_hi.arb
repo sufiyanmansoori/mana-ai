@@ -1,0 +1,12 @@
+{
+  "@@locale": "hi",
+  "appTitle": "Mana AI",
+  "localStarter": "स्थानीय प्रारंभिक संस्करण",
+  "composerHint": "Mana AI को संदेश भेजें",
+  "sendMessage": "संदेश भेजें",
+  "stopGeneration": "जवाब बनाना रोकें",
+  "chatEmpty": "Mana AI के साथ बातचीत शुरू करें।",
+  "localDataNotice": "संदेश केवल इस सत्र में रहते हैं। कोई सर्वर कनेक्ट नहीं है।",
+  "dismiss": "खारिज करें",
+  "invalidMessage": "संदेश नहीं भेजा जा सका। उसकी लंबाई और सामग्री जाँचें।"
+}

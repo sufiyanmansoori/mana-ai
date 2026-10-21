@@ -1,0 +1,12 @@
+{
+  "@@locale": "es",
+  "appTitle": "Mana AI",
+  "localStarter": "Versión inicial local",
+  "composerHint": "Envía un mensaje a Mana AI",
+  "sendMessage": "Enviar mensaje",
+  "stopGeneration": "Detener generación",
+  "chatEmpty": "Inicia una conversación con Mana AI.",
+  "localDataNotice": "Los mensajes solo permanecen en esta sesión. No hay un servidor conectado.",
+  "dismiss": "Cerrar",
+  "invalidMessage": "No se pudo enviar el mensaje. Revisa su longitud y contenido."
+}

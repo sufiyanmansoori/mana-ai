@@ -1,0 +1,12 @@
+{
+  "@@locale": "ur",
+  "appTitle": "Mana AI",
+  "localStarter": "مقامی ابتدائی ورژن",
+  "composerHint": "Mana AI کو پیغام بھیجیں",
+  "sendMessage": "پیغام بھیجیں",
+  "stopGeneration": "جواب بنانا روکیں",
+  "chatEmpty": "Mana AI کے ساتھ گفتگو شروع کریں۔",
+  "localDataNotice": "پیغامات صرف اسی سیشن میں رہتے ہیں۔ کوئی سرور منسلک نہیں ہے۔",
+  "dismiss": "بند کریں",
+  "invalidMessage": "پیغام نہیں بھیجا جا سکا۔ اس کی لمبائی اور مواد چیک کریں۔"
+}

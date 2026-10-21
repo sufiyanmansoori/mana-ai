@@ -1,0 +1,51 @@
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+.idea/
+.vscode/
+*.iml
+coverage/
+android/local.properties
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.mobileprovision
+*.jks
+*.keystore
+
+# JavaScript
+node_modules/
+apps/mana_ai_admin/dist/
+.npm/
+
+# Additional generated/editor output
+.pub-cache/
+apps/mana_ai_app/coverage/
+apps/mana_ai_app/windows/flutter/ephemeral/
+playwright-report/
+test-results/
+.DS_Store
+Thumbs.db
+
+# Terraform state is sensitive and must stay local.
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json

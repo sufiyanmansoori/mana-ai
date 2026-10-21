@@ -1,0 +1,12 @@
+{
+  "@@locale": "tr",
+  "appTitle": "Mana AI",
+  "localStarter": "Yerel başlangıç sürümü",
+  "composerHint": "Mana AI'ye mesaj gönder",
+  "sendMessage": "Mesaj gönder",
+  "stopGeneration": "Üretimi durdur",
+  "chatEmpty": "Mana AI ile bir sohbet başlatın.",
+  "localDataNotice": "Mesajlar yalnızca bu oturumda tutulur. Bağlı bir sunucu yok.",
+  "dismiss": "Kapat",
+  "invalidMessage": "Mesaj gönderilemedi. Uzunluğunu ve içeriğini kontrol edin."
+}

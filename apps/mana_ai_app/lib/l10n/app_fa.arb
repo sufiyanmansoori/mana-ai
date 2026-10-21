@@ -1,0 +1,12 @@
+{
+  "@@locale": "fa",
+  "appTitle": "Mana AI",
+  "localStarter": "نسخه آغازین محلی",
+  "composerHint": "برای Mana AI پیام بنویسید",
+  "sendMessage": "ارسال پیام",
+  "stopGeneration": "توقف تولید",
+  "chatEmpty": "گفت‌وگویی با Mana AI شروع کنید.",
+  "localDataNotice": "پیام‌ها فقط در این نشست باقی می‌مانند. هیچ سروری متصل نیست.",
+  "dismiss": "بستن",
+  "invalidMessage": "پیام ارسال نشد. طول و محتوای آن را بررسی کنید."
+}

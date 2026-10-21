@@ -1,0 +1,12 @@
+{
+  "@@locale": "pa",
+  "appTitle": "Mana AI",
+  "localStarter": "ਸਥਾਨਕ ਸ਼ੁਰੂਆਤੀ ਸੰਸਕਰਣ",
+  "composerHint": "Mana AI ਨੂੰ ਸੁਨੇਹਾ ਭੇਜੋ",
+  "sendMessage": "ਸੁਨੇਹਾ ਭੇਜੋ",
+  "stopGeneration": "ਜਵਾਬ ਬਣਾਉਣਾ ਰੋਕੋ",
+  "chatEmpty": "Mana AI ਨਾਲ ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰੋ।",
+  "localDataNotice": "ਸੁਨੇਹੇ ਸਿਰਫ਼ ਇਸ ਸੈਸ਼ਨ ਵਿੱਚ ਰਹਿੰਦੇ ਹਨ। ਕੋਈ ਸਰਵਰ ਜੁੜਿਆ ਨਹੀਂ ਹੈ।",
+  "dismiss": "ਬੰਦ ਕਰੋ",
+  "invalidMessage": "ਸੁਨੇਹਾ ਨਹੀਂ ਭੇਜਿਆ ਜਾ ਸਕਿਆ। ਇਸਦੀ ਲੰਬਾਈ ਅਤੇ ਸਮੱਗਰੀ ਜਾਂਚੋ।"
+}

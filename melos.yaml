@@ -1,0 +1,5 @@
+name: mana_ai
+
+packages:
+  - apps/mana_ai_app
+  - packages/*

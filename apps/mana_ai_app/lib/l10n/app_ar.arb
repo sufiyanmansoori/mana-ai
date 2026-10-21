@@ -1,0 +1,12 @@
+{
+  "@@locale": "ar",
+  "appTitle": "Mana AI",
+  "localStarter": "نسخة تجريبية محلية",
+  "composerHint": "أرسل رسالة إلى Mana AI",
+  "sendMessage": "إرسال الرسالة",
+  "stopGeneration": "إيقاف التوليد",
+  "chatEmpty": "ابدأ محادثة مع Mana AI.",
+  "localDataNotice": "تبقى الرسائل في هذه الجلسة فقط. لا يوجد خادم متصل.",
+  "dismiss": "إغلاق",
+  "invalidMessage": "تعذر إرسال الرسالة. تحقق من طولها ومحتواها."
+}
