@@ -1,0 +1,26 @@
+import type { ParsedEnvironment } from './env-schema.js';
+
+export interface RedisRuntimeConfig {
+  url?: string;
+  tls: boolean;
+  rejectUnauthorized: boolean;
+  keyPrefix: string;
+}
+
+export function createRedisRuntimeConfig(env: ParsedEnvironment): RedisRuntimeConfig {
+  if (env.REDIS_URL) {
+    const url = new URL(env.REDIS_URL);
+    if (!['redis:', 'rediss:'].includes(url.protocol)) {
+      throw new Error('REDIS_URL must use redis:// or rediss://.');
+    }
+    if (env.NODE_ENV === 'production' && url.protocol !== 'rediss:') {
+      throw new Error('Production REDIS_URL must use rediss:// TLS.');
+    }
+  }
+  return {
+    ...(env.REDIS_URL ? { url: env.REDIS_URL } : {}),
+    tls: env.REDIS_URL?.startsWith('rediss://') ?? false,
+    rejectUnauthorized: env.REDIS_TLS_REJECT_UNAUTHORIZED,
+    keyPrefix: env.REDIS_KEY_PREFIX,
+  };
+}

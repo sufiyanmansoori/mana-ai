@@ -1,0 +1,22 @@
+export declare const ERROR_CODES: {
+    readonly adminAccessRequired: "admin_access_required";
+    readonly aiProviderBusy: "ai_provider_busy";
+    readonly aiProviderError: "ai_provider_error";
+    readonly aiProviderNotConfigured: "ai_provider_not_configured";
+    readonly aiProviderTimeout: "ai_provider_timeout";
+    readonly chatRateLimitExceeded: "chat_rate_limit_exceeded";
+    readonly conversationNotFound: "conversation_not_found";
+    readonly featureNotEnabled: "feature_not_enabled";
+    readonly featureFlagNotFound: "feature_flag_not_found";
+    readonly adminRecordNotFound: "admin_record_not_found";
+    readonly imageProviderNotConfigured: "image_provider_not_configured";
+    readonly internalError: "internal_error";
+    readonly invalidAccessToken: "invalid_access_token";
+    readonly invalidRequest: "invalid_request";
+    readonly notFound: "not_found";
+    readonly requestTooLarge: "request_too_large";
+    readonly unsupportedAiProvider: "unsupported_ai_provider";
+    readonly unsupportedModel: "unsupported_model";
+    readonly validationError: "validation_error";
+};
+export type KnownErrorCode = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];

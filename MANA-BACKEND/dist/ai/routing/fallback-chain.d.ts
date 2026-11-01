@@ -1,0 +1,1 @@
+export declare function executeFallbackChain<T, Result>(routes: readonly T[], execute: (route: T) => Promise<Result>, canFallback: (error: unknown, route: T, nextRoute: T | undefined) => boolean, signal?: AbortSignal): Promise<Result>;

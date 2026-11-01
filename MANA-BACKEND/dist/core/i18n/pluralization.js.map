@@ -1,0 +1,1 @@
+{"version":3,"file":"pluralization.js","sourceRoot":"","sources":["../../../src/core/i18n/pluralization.ts"],"names":[],"mappings":"AAAA,MAAM,UAAU,cAAc,CAAC,KAAa,EAAE,MAAM,GAAG,IAAI;IACzD,IAAI,CAAC,MAAM,CAAC,QAAQ,CAAC,KAAK,CAAC;QAAE,MAAM,IAAI,UAAU,CAAC,8BAA8B,CAAC,CAAC;IAClF,OAAO,IAAI,IAAI,CAAC,WAAW,CAAC,MAAM,CAAC,CAAC,MAAM,CAAC,KAAK,CAAC,CAAC;AACpD,CAAC"}

@@ -1,0 +1,149 @@
+import type { Pool } from 'pg';
+import { ApiError } from '../errors.js';
+import { AdminRecordIdSchema } from './record-schemas.js';
+
+export interface AdminRecord {
+  id: string;
+  createdAt: Date;
+}
+
+export interface AdminRecordPage {
+  records: AdminRecord[];
+  nextCursor: string | null;
+}
+
+export interface AdminRecordRepositoryPort {
+  list(input: {
+    limit: number;
+    cursor?: string;
+  }): Promise<AdminRecordPage>;
+  getById(id: string): Promise<AdminRecord | null>;
+  save(record: AdminRecord): Promise<AdminRecord>;
+  delete(id: string): Promise<void>;
+}
+
+interface CursorPosition {
+  createdAt: Date;
+  id: string;
+}
+
+interface AdminRecordRow {
+  id: string;
+  created_at: Date;
+}
+
+export class AdminRecordRepository implements AdminRecordRepositoryPort {
+  constructor(private readonly pool: Pool) {}
+
+  async list(input: {
+    limit: number;
+    cursor?: string;
+  }): Promise<AdminRecordPage> {
+    const position = input.cursor ? decodeCursor(input.cursor) : undefined;
+    const values: unknown[] = [];
+    let cursorFilter = '';
+    if (position) {
+      values.push(position.createdAt, position.id);
+      cursorFilter = `WHERE (created_at < $1 OR (created_at = $1 AND id > $2))`;
+    }
+    values.push(input.limit + 1);
+    const limitParameter = `$${values.length}`;
+    const result = await this.pool.query<AdminRecordRow>(
+      `SELECT id, created_at
+       FROM admin_records
+       ${cursorFilter}
+       ORDER BY created_at DESC, id ASC
+       LIMIT ${limitParameter}`,
+      values,
+    );
+
+    const hasMore = result.rows.length > input.limit;
+    const rows = hasMore ? result.rows.slice(0, input.limit) : result.rows;
+    const records = rows.map(toRecord);
+    return {
+      records,
+      nextCursor: hasMore ? encodeCursor(records[records.length - 1]!) : null,
+    };
+  }
+
+  async getById(id: string): Promise<AdminRecord | null> {
+    const result = await this.pool.query<AdminRecordRow>(
+      `SELECT id, created_at FROM admin_records WHERE id = $1`,
+      [validateId(id)],
+    );
+    const row = result.rows[0];
+    return row ? toRecord(row) : null;
+  }
+
+  async save(record: AdminRecord): Promise<AdminRecord> {
+    const id = validateId(record.id);
+    if (!(record.createdAt instanceof Date) || !Number.isFinite(record.createdAt.getTime())) {
+      throw new ApiError(400, 'invalid_record_timestamp', 'A valid record timestamp is required.');
+    }
+    const result = await this.pool.query<AdminRecordRow>(
+      `INSERT INTO admin_records (id, created_at)
+       VALUES ($1, $2)
+       ON CONFLICT (id) DO UPDATE SET created_at = EXCLUDED.created_at
+       RETURNING id, created_at`,
+      [id, record.createdAt],
+    );
+    return toRecord(result.rows[0]!);
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.pool.query('DELETE FROM admin_records WHERE id = $1', [validateId(id)]);
+  }
+}
+
+function validateId(id: string): string {
+  const result = AdminRecordIdSchema.safeParse(id);
+  if (!result.success) {
+    throw new ApiError(400, 'invalid_admin_record_id', 'The admin record ID is invalid.');
+  }
+  return result.data;
+}
+
+function toRecord(row: AdminRecordRow): AdminRecord {
+  return {
+    id: row.id,
+    createdAt: row.created_at,
+  };
+}
+
+function encodeCursor(record: AdminRecord): string {
+  return Buffer.from(JSON.stringify({
+    createdAt: record.createdAt.toISOString(),
+    id: record.id,
+  })).toString('base64url');
+}
+
+function decodeCursor(token: string): CursorPosition {
+  try {
+    if (!/^[A-Za-z0-9_-]+$/.test(token)) throw new Error('Malformed cursor.');
+    const decoded = Buffer.from(token, 'base64url').toString('utf8');
+    if (Buffer.from(decoded).toString('base64url') !== token) {
+      throw new Error('Non-canonical cursor.');
+    }
+    const value: unknown = JSON.parse(decoded);
+    if (
+      value === null ||
+      typeof value !== 'object' ||
+      !('createdAt' in value) ||
+      !('id' in value) ||
+      typeof value.createdAt !== 'string' ||
+      typeof value.id !== 'string'
+    ) {
+      throw new Error('Invalid cursor payload.');
+    }
+    const createdAt = new Date(value.createdAt);
+    if (
+      !Number.isFinite(createdAt.getTime()) ||
+      createdAt.toISOString() !== value.createdAt
+    ) {
+      throw new Error('Invalid cursor timestamp.');
+    }
+    return { createdAt, id: validateId(value.id) };
+  } catch {
+    throw new ApiError(400, 'invalid_cursor', 'The pagination cursor is invalid.');
+  }
+}

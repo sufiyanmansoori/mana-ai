@@ -1,0 +1,1 @@
+export declare function transformStream<Input, Output>(source: AsyncIterable<Input>, transform: (item: Input, index: number) => Output | Promise<Output>, signal?: AbortSignal): AsyncGenerator<Output>;

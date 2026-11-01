@@ -1,0 +1,22 @@
+export const ERROR_CODES = {
+    adminAccessRequired: 'admin_access_required',
+    aiProviderBusy: 'ai_provider_busy',
+    aiProviderError: 'ai_provider_error',
+    aiProviderNotConfigured: 'ai_provider_not_configured',
+    aiProviderTimeout: 'ai_provider_timeout',
+    chatRateLimitExceeded: 'chat_rate_limit_exceeded',
+    conversationNotFound: 'conversation_not_found',
+    featureNotEnabled: 'feature_not_enabled',
+    featureFlagNotFound: 'feature_flag_not_found',
+    adminRecordNotFound: 'admin_record_not_found',
+    imageProviderNotConfigured: 'image_provider_not_configured',
+    internalError: 'internal_error',
+    invalidAccessToken: 'invalid_access_token',
+    invalidRequest: 'invalid_request',
+    notFound: 'not_found',
+    requestTooLarge: 'request_too_large',
+    unsupportedAiProvider: 'unsupported_ai_provider',
+    unsupportedModel: 'unsupported_model',
+    validationError: 'validation_error',
+};
+//# sourceMappingURL=error-codes.js.map

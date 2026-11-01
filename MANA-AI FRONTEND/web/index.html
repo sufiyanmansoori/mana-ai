@@ -1,0 +1,1076 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- Browser compatibility -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Responsive viewport -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <!-- Flutter base path -->
+    <base href="$FLUTTER_BASE_HREF" />
+
+    <!-- SEO metadata -->
+    <meta
+      name="description"
+      content="Chat with Mana AI, your helpful AI assistant."
+    />
+
+    <meta name="application-name" content="Mana AI" />
+    <meta name="author" content="Mana AI" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#101116" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Mobile web application -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Mana AI" />
+
+    <!-- App icons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="icons/apple-touch-icon.png?v=3"
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=3" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="icons/favicon-16.png?v=3"
+    />
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Page title -->
+    <title>Mana AI — Your AI Assistant</title>
+
+    <!--
+    =========================================================
+    MANA AI PREMIUM LOADER
+    =========================================================
+
+    Features:
+    - Dark AI-inspired interface
+    - Animated brand mark
+    - Responsive layout
+    - Accessible loading animation
+    - Flutter initialization integration
+    - Reduced-motion support
+    - Loading timeout fallback
+    - Error recovery UI
+
+    =========================================================
+  -->
+
+    <style>
+      /* -------------------------------------------------------
+       1. DESIGN TOKENS
+    ------------------------------------------------------- */
+
+      :root {
+        color-scheme: dark;
+
+        --mana-bg: #09090b;
+        --mana-surface: #111114;
+        --mana-surface-soft: #18181d;
+
+        --mana-text: #fafafa;
+        --mana-text-secondary: #a1a1aa;
+        --mana-text-muted: #71717a;
+
+        --mana-accent: #a78bfa;
+        --mana-accent-secondary: #818cf8;
+
+        --mana-border: rgba(255, 255, 255, 0.09);
+
+        --mana-radius: 18px;
+
+        --mana-transition: 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+        --mana-font:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      /* -------------------------------------------------------
+       2. RESET
+    ------------------------------------------------------- */
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        width: 100%;
+        height: 100%;
+        background: var(--mana-bg);
+
+        text-size-adjust: 100%;
+      }
+
+      body {
+        width: 100%;
+        min-width: 320px;
+        min-height: 100%;
+        margin: 0;
+        overflow: hidden;
+
+        background: var(--mana-bg);
+        color: var(--mana-text);
+
+        font-family: var(--mana-font);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      button:focus-visible {
+        outline: 2px solid var(--mana-accent);
+        outline-offset: 4px;
+      }
+
+      /* -------------------------------------------------------
+       3. FLUTTER APPLICATION ROOT
+    ------------------------------------------------------- */
+
+      #flutter-root {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--mana-bg);
+      }
+
+      /* -------------------------------------------------------
+       4. LOADER SCREEN
+    ------------------------------------------------------- */
+
+      #mana-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        height: 100%;
+        min-height: 100dvh;
+
+        padding: max(24px, env(safe-area-inset-top)) 24px
+          max(24px, env(safe-area-inset-bottom));
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            ellipse at 50% 38%,
+            rgba(124, 92, 220, 0.1),
+            transparent 42%
+          ),
+          radial-gradient(
+            ellipse at 15% 90%,
+            rgba(79, 70, 229, 0.06),
+            transparent 38%
+          ),
+          var(--mana-bg);
+
+        opacity: 1;
+        visibility: visible;
+
+        transition:
+          opacity 450ms ease,
+          visibility 450ms ease;
+      }
+
+      #mana-loader.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      /* -------------------------------------------------------
+       5. AMBIENT BACKGROUND
+    ------------------------------------------------------- */
+
+      .mana-ambient {
+        position: absolute;
+        inset: 0;
+
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .mana-ambient::before,
+      .mana-ambient::after {
+        content: "";
+
+        position: absolute;
+
+        width: min(70vw, 600px);
+        aspect-ratio: 1;
+
+        border-radius: 50%;
+        filter: blur(100px);
+
+        opacity: 0.12;
+      }
+
+      .mana-ambient::before {
+        top: -35%;
+        left: -20%;
+
+        background: #6366f1;
+
+        animation: ambient-float 12s ease-in-out infinite alternate;
+      }
+
+      .mana-ambient::after {
+        right: -25%;
+        bottom: -40%;
+
+        background: #8b5cf6;
+
+        animation: ambient-float 15s ease-in-out infinite alternate-reverse;
+      }
+
+      @keyframes ambient-float {
+        from {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        to {
+          transform: translate3d(25px, -20px, 0) scale(1.08);
+        }
+      }
+
+      /* -------------------------------------------------------
+       6. MAIN CONTENT
+    ------------------------------------------------------- */
+
+      .mana-loader-content {
+        position: relative;
+        z-index: 2;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+        max-width: 440px;
+
+        text-align: center;
+
+        animation: content-appear 700ms ease both;
+      }
+
+      @keyframes content-appear {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* -------------------------------------------------------
+       7. BRAND MARK
+    ------------------------------------------------------- */
+
+      .mana-brand-mark {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 94px;
+        height: 94px;
+
+        margin-bottom: 28px;
+
+        border: 1px solid rgba(196, 181, 253, 0.22);
+        border-radius: 28px;
+
+        background: linear-gradient(
+          145deg,
+          rgba(167, 139, 250, 0.15),
+          rgba(99, 102, 241, 0.04)
+        );
+
+        box-shadow:
+          0 0 0 8px rgba(167, 139, 250, 0.025),
+          0 0 60px rgba(139, 92, 246, 0.13),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+        animation: brand-float 3.5s ease-in-out infinite;
+      }
+
+      @keyframes brand-float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      /* Outer animated ring */
+
+      .mana-brand-ring {
+        position: absolute;
+        inset: -9px;
+
+        border: 1px solid rgba(167, 139, 250, 0.12);
+        border-radius: 35px;
+
+        animation: ring-pulse 3s ease-in-out infinite;
+      }
+
+      @keyframes ring-pulse {
+        0%,
+        100% {
+          opacity: 0.35;
+          transform: scale(0.98);
+        }
+
+        50% {
+          opacity: 0.9;
+          transform: scale(1.025);
+        }
+      }
+
+      /* Brand icon */
+
+      .mana-brand-icon {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 60px;
+        height: 60px;
+
+        color: #c4b5fd;
+      }
+
+      .mana-brand-icon svg {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        overflow: visible;
+      }
+
+      /* -------------------------------------------------------
+       8. BRAND TEXT
+    ------------------------------------------------------- */
+
+      .mana-brand-name {
+        margin: 0;
+
+        color: var(--mana-text);
+
+        font-size: clamp(28px, 5vw, 34px);
+        font-weight: 650;
+        letter-spacing: -1.5px;
+        line-height: 1.2;
+      }
+
+      .mana-brand-name span {
+        color: #c4b5fd;
+      }
+
+      .mana-brand-tagline {
+        margin: 12px 0 0;
+
+        color: var(--mana-text-secondary);
+
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.7;
+        letter-spacing: 0.05px;
+      }
+
+      /* -------------------------------------------------------
+       9. LOADING AREA
+    ------------------------------------------------------- */
+
+      .mana-loading-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+
+        margin-top: 43px;
+      }
+
+      .mana-loading-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 24px;
+        gap: 10px;
+      }
+
+      .mana-loading-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 5px;
+      }
+
+      .mana-loading-indicator span {
+        display: block;
+
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+
+        background: var(--mana-accent);
+
+        animation: loading-dot 1.2s ease-in-out infinite;
+      }
+
+      .mana-loading-indicator span:nth-child(2) {
+        animation-delay: 150ms;
+      }
+
+      .mana-loading-indicator span:nth-child(3) {
+        animation-delay: 300ms;
+      }
+
+      @keyframes loading-dot {
+        0%,
+        60%,
+        100% {
+          opacity: 0.35;
+          transform: translateY(0);
+        }
+
+        30% {
+          opacity: 1;
+          transform: translateY(-4px);
+        }
+      }
+
+      .mana-loading-text {
+        color: #d4d4d8;
+
+        font-size: 13px;
+        font-weight: 450;
+        letter-spacing: 0.1px;
+      }
+
+      /* -------------------------------------------------------
+       10. PROGRESS BAR
+    ------------------------------------------------------- */
+
+      .mana-progress-track {
+        position: relative;
+
+        width: min(220px, 75%);
+        height: 3px;
+
+        margin-top: 21px;
+
+        overflow: hidden;
+
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .mana-progress-bar {
+        position: absolute;
+        top: 0;
+        left: -35%;
+
+        width: 35%;
+        height: 100%;
+
+        border-radius: inherit;
+
+        background: linear-gradient(
+          90deg,
+          transparent,
+          #a78bfa,
+          #818cf8,
+          transparent
+        );
+
+        animation: progress-sweep 1.7s ease-in-out infinite;
+      }
+
+      @keyframes progress-sweep {
+        from {
+          left: -35%;
+        }
+
+        to {
+          left: 100%;
+        }
+      }
+
+      /* -------------------------------------------------------
+       11. FOOTER
+    ------------------------------------------------------- */
+
+      .mana-loader-footer {
+        position: absolute;
+        right: 20px;
+        bottom: max(22px, env(safe-area-inset-bottom));
+        left: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: var(--mana-text-muted);
+
+        font-size: 11px;
+        letter-spacing: 0.35px;
+        text-align: center;
+      }
+
+      .mana-footer-dot {
+        display: inline-block;
+
+        width: 5px;
+        height: 5px;
+
+        margin-right: 8px;
+
+        border-radius: 50%;
+
+        background: #34d399;
+        box-shadow: 0 0 10px rgba(52, 211, 153, 0.25);
+      }
+
+      /* -------------------------------------------------------
+       12. ERROR STATE
+    ------------------------------------------------------- */
+
+      .mana-error {
+        display: none;
+
+        width: 100%;
+        max-width: 340px;
+
+        margin-top: 24px;
+        padding: 16px;
+
+        border: 1px solid var(--mana-border);
+        border-radius: var(--mana-radius);
+
+        background: rgba(255, 255, 255, 0.035);
+
+        text-align: center;
+      }
+
+      .mana-error.is-visible {
+        display: block;
+        animation: content-appear 250ms ease both;
+      }
+
+      .mana-error-title {
+        margin: 0 0 7px;
+
+        color: var(--mana-text);
+
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .mana-error-description {
+        margin: 0;
+
+        color: var(--mana-text-secondary);
+
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      .mana-retry-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 40px;
+
+        margin-top: 15px;
+        padding: 0 18px;
+
+        border: 1px solid rgba(196, 181, 253, 0.22);
+        border-radius: 12px;
+
+        background: rgba(167, 139, 250, 0.12);
+
+        color: #ddd6fe;
+
+        font-size: 13px;
+        font-weight: 550;
+
+        cursor: pointer;
+
+        transition:
+          background var(--mana-transition),
+          transform var(--mana-transition);
+      }
+
+      .mana-retry-button:hover {
+        background: rgba(167, 139, 250, 0.2);
+      }
+
+      .mana-retry-button:active {
+        transform: scale(0.98);
+      }
+
+      /* -------------------------------------------------------
+       13. SMALL SCREENS
+    ------------------------------------------------------- */
+
+      @media (max-width: 480px) {
+        #mana-loader {
+          padding-right: 20px;
+          padding-left: 20px;
+        }
+
+        .mana-brand-mark {
+          width: 82px;
+          height: 82px;
+
+          margin-bottom: 25px;
+
+          border-radius: 25px;
+        }
+
+        .mana-brand-icon {
+          width: 53px;
+          height: 53px;
+        }
+
+        .mana-brand-ring {
+          border-radius: 31px;
+        }
+
+        .mana-brand-tagline {
+          max-width: 280px;
+
+          font-size: 13px;
+        }
+
+        .mana-loading-area {
+          margin-top: 36px;
+        }
+      }
+
+      @media (max-height: 540px) {
+        .mana-brand-mark {
+          width: 65px;
+          height: 65px;
+
+          margin-bottom: 17px;
+
+          border-radius: 20px;
+        }
+
+        .mana-brand-icon {
+          width: 43px;
+          height: 43px;
+        }
+
+        .mana-brand-ring {
+          border-radius: 25px;
+        }
+
+        .mana-brand-tagline {
+          margin-top: 7px;
+        }
+
+        .mana-loading-area {
+          margin-top: 22px;
+        }
+
+        .mana-progress-track {
+          margin-top: 14px;
+        }
+      }
+
+      /* -------------------------------------------------------
+       14. ACCESSIBILITY
+    ------------------------------------------------------- */
+
+      .mana-visually-hidden {
+        position: absolute;
+
+        width: 1px;
+        height: 1px;
+
+        padding: 0;
+        margin: -1px;
+
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+
+        white-space: nowrap;
+
+        border: 0;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* -------------------------------------------------------
+       15. INITIALIZATION SAFETY
+    ------------------------------------------------------- */
+
+      noscript {
+        display: block;
+
+        padding: 20px;
+
+        color: var(--mana-text);
+
+        font-family: var(--mana-font);
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Flutter renders its application into the browser viewport. -->
+    <div id="flutter-root"></div>
+
+    <!-- =======================================================
+       MANA AI LOADER
+  ======================================================== -->
+
+    <div
+      id="mana-loader"
+      role="status"
+      aria-live="polite"
+      aria-label="Mana AI is loading"
+    >
+      <!-- Ambient background effects -->
+      <div class="mana-ambient" aria-hidden="true"></div>
+
+      <!-- Main loader content -->
+      <main class="mana-loader-content">
+        <!-- Animated brand mark -->
+        <div class="mana-brand-mark" aria-hidden="true">
+          <div class="mana-brand-ring"></div>
+
+          <div class="mana-brand-icon">
+            <!--
+            Inline SVG avoids an additional image request.
+            Replace this SVG with your official Mana AI logo
+            if you already have one.
+          -->
+
+            <svg
+              viewBox="0 0 100 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient
+                  id="mana-gradient"
+                  x1="15"
+                  y1="15"
+                  x2="85"
+                  y2="85"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop offset="0%" stop-color="#DDD6FE" />
+                  <stop offset="50%" stop-color="#A78BFA" />
+                  <stop offset="100%" stop-color="#818CF8" />
+                </linearGradient>
+
+                <linearGradient
+                  id="mana-core-gradient"
+                  x1="20"
+                  y1="20"
+                  x2="80"
+                  y2="80"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop offset="0%" stop-color="#FFFFFF" />
+                  <stop offset="100%" stop-color="#C4B5FD" />
+                </linearGradient>
+              </defs>
+
+              <!-- Outer geometric symbol -->
+              <path
+                d="M50 8
+                 L88 30
+                 L88 70
+                 L50 92
+                 L12 70
+                 L12 30
+                 Z"
+                stroke="url(#mana-gradient)"
+                stroke-width="3"
+                stroke-linejoin="round"
+                opacity="0.85"
+              />
+
+              <!-- Inner AI-inspired M symbol -->
+              <path
+                d="M27 67
+                 V35
+                 L50 57
+                 L73 35
+                 V67"
+                stroke="url(#mana-core-gradient)"
+                stroke-width="7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <!-- Center intelligence point -->
+              <circle cx="50" cy="57" r="4" fill="#C4B5FD" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Brand name -->
+        <h1 class="mana-brand-name">Mana <span>AI</span></h1>
+
+        <p class="mana-brand-tagline">
+          Your AI companion, ready to help.
+        </p>
+
+        <!-- Loading indicator -->
+        <section class="mana-loading-area">
+          <div class="mana-loading-row">
+            <div class="mana-loading-indicator" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <span id="mana-loading-text" class="mana-loading-text">
+              Starting Mana AI
+            </span>
+          </div>
+
+          <!-- Indeterminate progress animation -->
+          <div class="mana-progress-track" aria-hidden="true">
+            <div class="mana-progress-bar"></div>
+          </div>
+        </section>
+
+        <!-- Initialization error and retry -->
+        <section id="mana-error" class="mana-error" aria-live="assertive">
+          <h2 class="mana-error-title">Unable to start Mana AI</h2>
+
+          <p class="mana-error-description">
+            The application is taking longer than expected to load. Check your
+            connection and try again.
+          </p>
+
+          <button id="mana-retry" class="mana-retry-button" type="button">
+            Reload application
+          </button>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="mana-loader-footer">
+        <span class="mana-footer-dot" aria-hidden="true"></span>
+
+        <span> Preparing your workspace </span>
+      </footer>
+    </div>
+
+    <noscript>
+      Mana AI requires JavaScript to run. Please enable JavaScript in your
+      browser and reload the page.
+    </noscript>
+
+    <!-- =======================================================
+       LOADER CONTROLLER
+  ======================================================== -->
+
+    <script>
+      (function () {
+        "use strict";
+
+        const loader = document.getElementById("mana-loader");
+        const loadingText = document.getElementById("mana-loading-text");
+        const errorPanel = document.getElementById("mana-error");
+        const retryButton = document.getElementById("mana-retry");
+
+        if (!loader) {
+          return;
+        }
+
+        let isHidden = false;
+        let timeoutId = null;
+        let messageTimer = null;
+
+        /*
+         * These messages describe the startup experience.
+         * They are visual status messages, not measurements
+         * of actual backend or model readiness.
+         */
+        const loadingMessages = [
+          "Starting Mana AI",
+          "Preparing your workspace",
+          "Loading your experience",
+        ];
+
+        let messageIndex = 0;
+
+        /*
+         * Rotate loading messages without adding dependencies.
+         */
+        function startLoadingMessages() {
+          if (!loadingText) {
+            return;
+          }
+
+          messageTimer = window.setInterval(function () {
+            if (isHidden) {
+              return;
+            }
+
+            messageIndex = (messageIndex + 1) % loadingMessages.length;
+
+            loadingText.textContent = loadingMessages[messageIndex];
+          }, 2400);
+        }
+
+        /*
+         * Hide the HTML loader after Flutter has initialized.
+         */
+        function hideLoader() {
+          if (isHidden) {
+            return;
+          }
+
+          isHidden = true;
+
+          if (timeoutId !== null) {
+            window.clearTimeout(timeoutId);
+          }
+
+          if (messageTimer !== null) {
+            window.clearInterval(messageTimer);
+          }
+
+          loader.classList.add("is-hidden");
+
+          /*
+           * Remove the loader from the accessibility tree and
+           * DOM after the transition. Flutter remains untouched.
+           */
+          window.setTimeout(function () {
+            if (loader.parentNode) {
+              loader.parentNode.removeChild(loader);
+            }
+          }, 500);
+        }
+
+        /*
+         * Show a recoverable loading timeout message.
+         * This does not assume that Flutter has failed.
+         */
+        function showTimeoutMessage() {
+          if (isHidden || !errorPanel) {
+            return;
+          }
+
+          errorPanel.classList.add("is-visible");
+
+          if (loadingText) {
+            loadingText.textContent = "Still preparing your experience";
+          }
+        }
+
+        /*
+         * Allow users to retry a stalled application.
+         */
+        if (retryButton) {
+          retryButton.addEventListener("click", function () {
+            window.location.reload();
+          });
+        }
+
+        /*
+         * Flutter's web bootstrap dispatches this event when
+         * the first Flutter frame has been rendered.
+         *
+         * This is the preferred point to hide the HTML loader.
+         */
+        window.addEventListener("flutter-first-frame", hideLoader, {
+          once: true,
+        });
+
+        /*
+         * Fallback for a slow startup.
+         *
+         * A timeout only reveals a retry option. It does not
+         * automatically hide the loader or stop Flutter.
+         */
+        timeoutId = window.setTimeout(showTimeoutMessage, 20000);
+
+        startLoadingMessages();
+
+        /*
+         * Expose an optional hook for custom integrations.
+         */
+        window.manaLoader = {
+          hide: hideLoader,
+        };
+      })();
+    </script>
+
+    <!-- =======================================================
+       FLUTTER WEB BOOTSTRAP
+  ======================================================== -->
+
+    <script src="flutter_bootstrap.js" async></script>
+  </body>
+</html>

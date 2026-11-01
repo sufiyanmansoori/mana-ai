@@ -1,0 +1,117 @@
+name: End-to-end tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api:
+    name: PostgreSQL-backed API smoke test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: mana_ai
+          POSTGRES_USER: mana_ai
+          POSTGRES_PASSWORD: ci-only-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mana_ai -d mana_ai"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      NODE_ENV: development
+      API_HOST: 127.0.0.1
+      API_PORT: 3000
+      API_CORS_ORIGINS: http://localhost:8080
+      DATABASE_URL: postgres://mana_ai:ci-only-password@127.0.0.1:5432/mana_ai
+      DATABASE_SSL: disable
+      LOCAL_JWT_SECRET: ci-only-test-secret-with-more-than-thirty-two-characters
+      ADMIN_SUBJECTS: mana-ai-ci-admin
+      AI_PROVIDER: openai-compatible
+      AI_BASE_URL: https://api.openai.com/v1
+      AI_MODEL: gpt-4o-mini
+      AI_ALLOWED_MODELS: gpt-4o-mini
+      LOG_LEVEL: silent
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Write CI-only environment file for migration command
+        shell: bash
+        run: |
+          cat > .env <<'EOF'
+          NODE_ENV=development
+          API_HOST=127.0.0.1
+          API_PORT=3000
+          API_CORS_ORIGINS=http://localhost:8080
+          DATABASE_URL=postgres://mana_ai:ci-only-password@127.0.0.1:5432/mana_ai
+          DATABASE_SSL=disable
+          LOCAL_JWT_SECRET=ci-only-test-secret-with-more-than-thirty-two-characters
+          ADMIN_SUBJECTS=mana-ai-ci-admin
+          AI_PROVIDER=openai-compatible
+          AI_BASE_URL=https://api.openai.com/v1
+          AI_MODEL=gpt-4o-mini
+          AI_ALLOWED_MODELS=gpt-4o-mini
+          LOG_LEVEL=silent
+          EOF
+      - name: Apply database migrations
+        run: npm run migrate --workspace=@mana-ai/api
+      - name: Build production API artifact
+        run: npm run build --workspace=@mana-ai/api
+      - name: Build production container
+        run: docker build -f apps/mana_ai_api/Dockerfile -t mana-ai-api:ci .
+      - name: Start compiled API
+        shell: bash
+        run: |
+          node apps/mana_ai_api/dist/server.js > "$RUNNER_TEMP/mana-ai-api.log" 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/mana-ai-api.pid"
+      - name: Verify readiness, authentication, and administrator API
+        shell: bash
+        run: |
+          trap 'kill "$(cat "$RUNNER_TEMP/mana-ai-api.pid")" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/health/ready; then
+              break
+            fi
+            sleep 2
+          done
+          curl --fail --silent http://127.0.0.1:3000/health/live
+          TOKEN="$(curl --fail --silent \
+            -H 'content-type: application/json' \
+            -d '{"subject":"mana-ai-ci-admin"}' \
+            http://127.0.0.1:3000/v1/auth/dev-token \
+            | node -e "let data='';process.stdin.on('data',chunk=>data+=chunk).on('end',()=>process.stdout.write(JSON.parse(data).access_token))")"
+          test -n "$TOKEN"
+          curl --fail --silent \
+            -H "authorization: Bearer $TOKEN" \
+            http://127.0.0.1:3000/v1/me \
+            | node -e "let data='';process.stdin.on('data',chunk=>data+=chunk).on('end',()=>{if(JSON.parse(data).subject!=='mana-ai-ci-admin')process.exit(1)})"
+          curl --fail --silent \
+            -H "authorization: Bearer $TOKEN" \
+            http://127.0.0.1:3000/v1/admin/records \
+            | node -e "let data='';process.stdin.on('data',chunk=>data+=chunk).on('end',()=>{const body=JSON.parse(data);if(!Array.isArray(body.data)||body.next_cursor!==null)process.exit(1)})"
+      - name: Print API logs on failure
+        if: failure()
+        run: cat "$RUNNER_TEMP/mana-ai-api.log"

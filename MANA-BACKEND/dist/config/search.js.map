@@ -1,0 +1,1 @@
+{"version":3,"file":"search.js","sourceRoot":"","sources":["../../src/config/search.ts"],"names":[],"mappings":"AASA,MAAM,UAAU,yBAAyB,CAAC,GAAsB;IAC9D,OAAO;QACL,OAAO,EAAE,GAAG,CAAC,cAAc;QAC3B,kBAAkB,EAAE,GAAG,CAAC,uBAAuB;QAC/C,cAAc,EAAE,GAAG,CAAC,kBAAkB;QACtC,SAAS,EAAE,GAAG,CAAC,iBAAiB;KACjC,CAAC;AACJ,CAAC"}

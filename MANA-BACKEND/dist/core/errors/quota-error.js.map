@@ -1,0 +1,1 @@
+{"version":3,"file":"quota-error.js","sourceRoot":"","sources":["../../../src/core/errors/quota-error.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,gBAAgB,CAAC;AAE1C,MAAM,OAAO,UAAW,SAAQ,QAAQ;IACtC,YAAY,OAAO,GAAG,yCAAyC;QAC7D,KAAK,CAAC,GAAG,EAAE,gBAAgB,EAAE,OAAO,CAAC,CAAC;QACtC,IAAI,CAAC,IAAI,GAAG,YAAY,CAAC;IAC3B,CAAC;CACF"}

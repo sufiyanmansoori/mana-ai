@@ -1,0 +1,1 @@
+{"version":3,"file":"provider-factory.js","sourceRoot":"","sources":["../../src/chat/provider-factory.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,sBAAsB,EAAE,MAAM,+CAA+C,CAAC;AAGvF,MAAM,UAAU,4BAA4B,CAAC,MAAiB;IAC5D,OAAO,sBAAsB,CAAC,MAAM,CAAC,CAAC,GAAG,CAAC,MAAM,CAAC,UAAU,CAAC,CAAC;AAC/D,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"observability.js","sourceRoot":"","sources":["../../src/config/observability.ts"],"names":[],"mappings":"AAQA,MAAM,UAAU,yBAAyB,CAAC,GAAsB;IAC9D,OAAO;QACL,WAAW,EAAE,GAAG,CAAC,YAAY;QAC7B,cAAc,EAAE,GAAG,CAAC,eAAe;QACnC,GAAG,CAAC,GAAG,CAAC,2BAA2B;YACjC,CAAC,CAAC,EAAE,YAAY,EAAE,GAAG,CAAC,2BAA2B,EAAE;YACnD,CAAC,CAAC,EAAE,CAAC;KACR,CAAC;AACJ,CAAC"}

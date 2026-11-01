@@ -1,0 +1,20 @@
+import type { ParsedEnvironment } from './env-schema.js';
+
+export interface QueueRuntimeConfig {
+  redisConfigured: boolean;
+  concurrency: number;
+  redisUrl?: string;
+  prefix: string;
+}
+
+export function createQueueRuntimeConfig(env: ParsedEnvironment): QueueRuntimeConfig {
+  if (env.QUEUE_CONCURRENCY > 1 && !env.REDIS_URL) {
+    return { redisConfigured: false, concurrency: 1, prefix: env.REDIS_KEY_PREFIX };
+  }
+  return {
+    redisConfigured: Boolean(env.REDIS_URL),
+    concurrency: env.REDIS_URL ? env.QUEUE_CONCURRENCY : 1,
+    ...(env.REDIS_URL ? { redisUrl: env.REDIS_URL } : {}),
+    prefix: env.REDIS_KEY_PREFIX,
+  };
+}

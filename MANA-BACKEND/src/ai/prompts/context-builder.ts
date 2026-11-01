@@ -1,0 +1,16 @@
+import { UNTRUSTED_CONTEXT_INSTRUCTION } from './system-prompts.js';
+
+export interface ContextDocument {
+  id: string;
+  text: string;
+}
+
+export function buildContextMessage(documents: readonly ContextDocument[]): string | undefined {
+  if (documents.length === 0) return undefined;
+  const serialized = documents.map((document, index) => JSON.stringify({
+    index: index + 1,
+    id: document.id,
+    text: document.text,
+  }));
+  return `${UNTRUSTED_CONTEXT_INSTRUCTION}\n${serialized.join('\n')}`;
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"body-parser.middleware.js","sourceRoot":"","sources":["../../../src/core/middleware/body-parser.middleware.ts"],"names":[],"mappings":"AAAA,OAAO,OAAO,MAAM,SAAS,CAAC;AAE9B,MAAM,UAAU,oBAAoB,CAClC,UAA8C,EAAE,KAAK,EAAE,KAAK,EAAE,MAAM,EAAE,IAAI,EAAE;IAE5E,OAAO,OAAO,CAAC,IAAI,CAAC,OAAO,CAAC,CAAC;AAC/B,CAAC"}
